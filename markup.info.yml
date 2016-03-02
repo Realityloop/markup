@@ -1,0 +1,7 @@
+name: Markup
+description: Defines a field type for markup.
+type: module
+package: Fields
+core: 8.x
+dependencies:
+  - field

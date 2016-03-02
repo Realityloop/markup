@@ -1,5 +1,0 @@
-name = Markup
-description = Defines a field type for markup.
-core = 7.x
-dependencies[] = field
-package = Fields
