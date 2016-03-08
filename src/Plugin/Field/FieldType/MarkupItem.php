@@ -10,25 +10,7 @@ namespace Drupal\markup\Plugin\Field\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
-
-/**
- * Implements hook_field_info().
- */
-//function markup_field_info() {
-//  return array(
-//    'markup' => array(
-//      'label' => 'Markup',
-//      'description' => t('Provides field to output markup on the entities edit form'),
-//      'default_widget' => 'markup',
-//      'default_formatter' => 'markup_default',
-//      'settings' => array(
-//        'markup' => array(
-//          'format' => filter_default_format(),
-//        ),
-//      ),
-//    ),
-//  );
-//}
+use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Plugin implementation of the 'markup' field type.
@@ -39,7 +21,7 @@ use Drupal\Core\Form\FormStateInterface;
  *   description = @Translation("Provides field to output markup on the entities edit form"),
  *   category = @Translation("General"),
  *   default_widget = "markup",
- *   default_formatter = "markup_default",
+ *   default_formatter = "markup",
  * )
  */
 class MarkupItem extends FieldItemBase {
@@ -48,14 +30,24 @@ class MarkupItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function schema(FieldStorageDefinitionInterface $field_definition) {
-    return [];
+    return [
+      'columns' => [
+        'markup' => [
+          'type'   => 'varchar',
+          'length' => 255,
+        ],
+      ],
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    return [];
+    $properties['markup'] = DataDefinition::create('string')
+      ->setLabel(t('Markup'));
+
+    return $properties;
   }
 
   /**

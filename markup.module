@@ -5,67 +5,20 @@
  * Defines a field type for displaying markup on the node/edit form.
  */
 
-///**
-// * Implements hook_field_formatter_info().
-// */
-//function markup_field_formatter_info() {
-//  return array(
-//    'markup_default' => array(
-//      'label' => t('Edit form only'),
-//      'description' => t('Markup will only be displayed when a user is on the edit page.'),
-//      'field types' => array('markup'),
-//    ),
-//    'markup_view' => array(
-//      'label' => t('Always visible'),
-//      'description' => t('Displays the markup while viewing the entity (in addition to the edit form).'),
-//      'field types' => array('markup'),
-//    ),
-//  );
-//}
+use Drupal\Core\Form\FormStateInterface;
 
-///**
-// * Implements hook_field_formatter_prepare_view().
-// */
-//function markup_field_formatter_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays) {
-//  if ($field['type'] != 'markup') {
-//    return;
-//  }
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Remove 'number of values' selection.
+ */
+function markup_form_field_storage_config_edit_form_alter(&$form, FormStateInterface $form_state) {
+  /** @var \Drupal\field_ui\Form\FieldStorageConfigEditForm $form_object */
+  $form_object = $form_state->getFormObject();
+  /** @var \Drupal\field\Entity\FieldStorageConfig $entity */
+  $entity = $form_object->getEntity();
+  if ($entity->get('module') == 'markup') {
+    unset($form['cardinality_container']);
+  }
+}
 
-//  // Set item value to markup for all to-be-displayed markup.
-//  foreach ($items as $eid => $item) {
-//    if ($instances[$eid]['display']['default']['type'] == 'markup_view') {
-//      $markup = $field['settings']['markup'];
-//      // Since markup is always a single item, add to the first item.
-//      $items[$eid][0]['markup'] = check_markup($markup['value'], $markup['format']);
-//    }
-//  }
-//}
-//
-///**
-// * Implements hook_field_formatter_view().
-// */
-//function markup_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-//  $element = array();
-//  foreach ($items as $delta => $item) {
-//    $element[$delta]['#markup'] = $item['markup'];
-//  }
-//  return $element;
-//}
-
-///**
-// * Implements hook_field_is_empty().
-// */
-//function markup_field_is_empty($item, $field) {
-//  return empty($item['markup']);
-//}
-
-///**
-// * Remove 'number of values' selection.
-// */
-//function markup_form_alter(&$form, &$form_state, $form_id) {
-//  if ($form_id == 'field_ui_field_edit_form') {
-//    if ($form['#field']['module'] == 'markup') {
-//      unset($form['field']['cardinality']);
-//    }
-//  }
-//}
