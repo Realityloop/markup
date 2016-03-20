@@ -70,16 +70,16 @@ class MarkupItem extends FieldItemBase {
 
     $element['markup'] = [
       '#type'          => 'text_format',
-      '#title'         => t('Markup'),
+      '#title'         => $this->t('Markup'),
       '#default_value' => isset($settings['markup']['value']) ? $settings['markup']['value'] : '',
       '#format'        => isset($settings['markup']['format']) ? $settings['markup']['format'] : filter_default_format(),
       '#required'      => TRUE,
       '#rows'          => 15,
-      '#description'   => t('The markup to be displayed. Any HTML is legal here, so be careful not to break your page layout.'),
+      '#description'   => $this->t('The markup to be displayed. Any HTML is legal here, so be careful not to break your page layout.'),
     ];
 
     $element['instructions'] = [
-      '#markup' => htmlentities(t('This is a special field. It will output the markup below, on the node/edit form for this content type. Consider wrapping any visible output in <div class="form-item"></div> to follow form standards.')),
+      '#markup' => htmlentities($this->t('This is a special field. It will output the markup below, on the node/edit form for this content type. Consider wrapping any visible output in <div class="form-item"></div> to follow form standards.')),
       '#weight' => -1,
     ];
 
